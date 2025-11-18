@@ -72,6 +72,7 @@ function App() {
   const [transactionView, setTransactionView] = useState<TransactionPreview>(
     emptyTransactionPreview
   );
+  const [convertText, setConvertText] = useState("");
 
   const networkLabel = useMemo(
     () =>
@@ -110,11 +111,6 @@ function App() {
     setConnectionStatus("disconnected");
   };
 
-  const handleNetworkChange = (value: string) => {
-    setSelectedNetwork(value);
-    console.log("[Network] Network changed", { network: value });
-  };
-
   const handleSyncAccount = async () => {
     try {
       const bal = await provider?.getBalance(accountAddress);
@@ -136,11 +132,6 @@ function App() {
       return;
     }
     const n = await provider?.getNetwork();
-    console.log(
-      "%c [ n ]: ",
-      "color: #bf2c9f; background: pink; font-size: 13px;",
-      n
-    );
     if (!n) {
       console.error("没有连接钱包！");
       return;
@@ -182,12 +173,38 @@ function App() {
       positionInBlock: tx!.index,
       inputData: tx!.data,
     });
+
+    const temp = parseHexToString(transactionView.inputData);
+    console.log(temp);
+    if (temp != null) {
+      setConvertText(temp);
+    }
   };
 
   const handleResetTransactionView = () => {
     setTxHash("");
     setTransactionView(emptyTransactionPreview);
     console.log("[Transaction] Placeholder state reset");
+  };
+
+  /**
+   * 转化十六进制数据为字符串
+   * @param source 需要转换的十六进制
+   * @returns 转换后的字符串结果
+   */
+  const parseHexToString = (source: string) => {
+    const hex = source.slice(2);
+    if (hex.length % 2 !== 0) {
+      console.error("传入的十六进制字符串不合法！！");
+      return;
+    }
+    let result = "";
+    for (let index = 0; index < hex.length; index += 2) {
+      result += String.fromCharCode(
+        parseInt(hex.substring(index, index + 2), 16)
+      );
+    }
+    return result;
   };
 
   return (
@@ -235,20 +252,6 @@ function App() {
             断开连接
           </button>
         </div>
-
-        <label className="field">
-          <span>选择网络</span>
-          <select
-            value={selectedNetwork}
-            onChange={(event) => handleNetworkChange(event.target.value)}
-          >
-            {networkOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label} · {option.description}
-              </option>
-            ))}
-          </select>
-        </label>
       </section>
 
       <section className="panel">
@@ -387,6 +390,11 @@ function App() {
         <div className="transaction-section">
           <h3>Input Data</h3>
           <pre className="input-preview">{transactionView.inputData}</pre>
+        </div>
+        <div className="transaction-section">
+          <h3>解码后的InputData</h3>
+          <pre className="input-preview">{convertText}</pre>
+          {convertText.startsWith("http") && <img src={convertText} />}
         </div>
       </section>
     </div>
