@@ -1,42 +1,427 @@
+:root {
+  font-family: "Inter", "SF Pro Display", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f6f7f9;
+  background-color: #0b0f17;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(
+    circle at top,
+    rgba(17, 34, 64, 0.7),
+    rgba(4, 7, 14, 0.9)
+  );
+  min-height: 100vh;
+}
+
 #root {
-  max-width: 1280px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 64px 20px 96px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(69, 104, 220, 0.3),
+    rgba(176, 106, 179, 0.3)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 60px rgba(3, 8, 20, 0.45);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 12px;
+  color: #9db1ff;
+}
+
+.hero h1 {
+  margin: 12px 0 8px;
+  font-size: clamp(32px, 5vw, 46px);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 580px;
+}
+
+.network-chip {
+  align-self: flex-start;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: right;
+}
+
+.network-chip span {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.network-chip strong {
+  font-size: 20px;
+}
+
+.panel {
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(13, 17, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 45px rgba(5, 8, 20, 0.55);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.panel h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+
+.panel p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.online {
+  background: linear-gradient(120deg, #13f1fc, #0470dc);
+  box-shadow: 0 0 12px rgba(67, 217, 173, 0.8);
+}
+
+.dot.offline {
+  background: linear-gradient(120deg, #ff3c41, #ff7574);
+  box-shadow: 0 0 8px rgba(255, 60, 65, 0.6);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, #5a52ff, #7d6bff);
+  box-shadow: 0 12px 25px rgba(37, 32, 79, 0.5);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(37, 32, 79, 0.6);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button.secondary {
+  background: linear-gradient(135deg, #353a47, #2c313c);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45);
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input,
+select {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 12, 20, 0.75);
+  color: #fff;
+  padding: 12px 14px;
+  font-size: 15px;
+  outline: none;
+  transition: border 120ms ease, box-shadow 120ms ease;
+}
+
+input:focus,
+select:focus {
+  border: 1px solid rgba(111, 144, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(111, 144, 255, 0.25);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.grid .full {
+  grid-column: 1 / -1;
+}
+
+.button-row {
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rest-hint {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.rest-hint a {
+  color: #9db1ff;
+  text-decoration: none;
+}
+
+.rest-hint a:hover {
+  text-decoration: underline;
+}
+
+.error-text {
+  margin: 12px 0 0;
+  color: #ff7574;
+  font-size: 14px;
+}
+
+.transaction-details {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(18, 22, 33, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.transaction-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.transaction-row span:first-child {
+  color: rgba(255, 255, 255, 0.65);
+  min-width: 120px;
+}
+
+.transaction-row code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  word-break: break-all;
+  flex: 1;
+}
+
+.transaction-row strong {
+  font-size: 18px;
+}
+
+.status-chip {
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-chip.success {
+  background: rgba(19, 241, 252, 0.1);
+  color: #5ffbf1;
+}
+
+.status-chip.failed {
+  background: rgba(255, 60, 65, 0.12);
+  color: #ff7574;
+}
+
+.status-chip.pending {
+  background: rgba(255, 193, 7, 0.12);
+  color: #ffd166;
+}
+
+.transaction-link {
+  margin-top: 8px;
+  color: #9db1ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.transaction-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .panel {
+    padding: 22px;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.transaction-panel .transaction-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-.card {
-  padding: 2em;
+.transaction-overview {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
 }
 
-.read-the-docs {
-  color: #888;
+.overview-card {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.overview-card code {
+  overflow-wrap: anywhere;
+}
+
+.overview-card span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.overview-card strong {
+  font-size: 22px;
+}
+
+.overview-card small {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.transaction-section {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.transaction-section h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.meta-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-grid span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.meta-grid strong,
+.meta-grid code {
+  font-size: 16px;
+}
+
+.input-preview {
+  margin: 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow-x: auto;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 14px;
+  color: #f6f7f9;
 }
