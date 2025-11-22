@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 import { BrowserProvider } from "ethers";
 import { JsonRpcSigner } from "ethers";
@@ -73,6 +73,9 @@ function App() {
     emptyTransactionPreview
   );
   const [convertText, setConvertText] = useState("");
+  const [inspectMode, setInspectMode] = useState<
+    "alchemy" | "infura" | "ethereum"
+  >("ethereum");
 
   const networkLabel = useMemo(
     () =>
@@ -111,6 +114,11 @@ function App() {
     setConnectionStatus("disconnected");
   };
 
+  const handleSwitchInspectMode = (mode: "alchemy" | "infura" | "ethereum") => {
+    setInspectMode(mode);
+    console.log("[Transaction] Query mode switched", { mode });
+  };
+
   const handleSyncAccount = async () => {
     try {
       const bal = await provider?.getBalance(accountAddress);
@@ -131,6 +139,10 @@ function App() {
       console.warn("[Transaction] Missing tx hash input");
       return;
     }
+    console.log("[Transaction] Inspect action triggered", {
+      hash: trimmedHash,
+      mode: inspectMode,
+    });
     const n = await provider?.getNetwork();
     if (!n) {
       console.error("没有连接钱包！");
@@ -294,16 +306,43 @@ function App() {
             <p>模仿 Etherscan 交易详情页的布局，仅保留 UI 骨架与占位信息。</p>
           </div>
           <div className="transaction-actions">
-            <button
-              type="button"
-              className="ghost"
-              onClick={handleResetTransactionView}
-            >
-              清空占位
-            </button>
-            <button type="button" onClick={handleInspectTransaction}>
-              根据哈希查询
-            </button>
+            <div className="mode-toggle">
+              <button
+                type="button"
+                className={`ghost ${
+                  inspectMode === "ethereum" ? "active" : ""
+                }`}
+                onClick={() => handleSwitchInspectMode("ethereum")}
+              >
+                使用 ethereum
+              </button>
+              <button
+                type="button"
+                className={`ghost ${inspectMode === "alchemy" ? "active" : ""}`}
+                onClick={() => handleSwitchInspectMode("alchemy")}
+              >
+                使用 Alchemy
+              </button>
+              <button
+                type="button"
+                className={`ghost ${inspectMode === "infura" ? "active" : ""}`}
+                onClick={() => handleSwitchInspectMode("infura")}
+              >
+                使用 Infura
+              </button>
+            </div>
+            <div className="transaction-buttons">
+              <button
+                type="button"
+                className="ghost"
+                onClick={handleResetTransactionView}
+              >
+                清空占位
+              </button>
+              <button type="button" onClick={handleInspectTransaction}>
+                根据哈希查询
+              </button>
+            </div>
           </div>
         </div>
 
