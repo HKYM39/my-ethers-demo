@@ -1,0 +1,43 @@
+.wallet-account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.online {
+  background: linear-gradient(120deg, #13f1fc, #0470dc);
+  box-shadow: 0 0 12px rgba(67, 217, 173, 0.8);
+}
+
+.dot.offline {
+  background: linear-gradient(120deg, #ff3c41, #ff7574);
+  box-shadow: 0 0 8px rgba(255, 60, 65, 0.6);
+}
