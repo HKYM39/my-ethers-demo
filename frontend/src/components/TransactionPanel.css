@@ -7,67 +7,14 @@
 }
 
 .transaction-actions .transaction-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.mode-toggle {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.mode-toggle .active {
-  border-color: rgba(125, 107, 255, 0.85);
-  background: rgba(125, 107, 255, 0.2);
-  color: #fff;
-  box-shadow: 0 0 0 3px rgba(125, 107, 255, 0.25);
+  margin-left: auto;
 }
 
 .transaction-overview {
-  margin-top: 24px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
-}
-
-.transaction-scope {
-  margin: 18px 0;
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.scope-tabs {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.pill {
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 10px 14px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.85);
-  cursor: pointer;
-}
-
-.pill.active {
-  background: rgba(125, 107, 255, 0.2);
-  border-color: rgba(125, 107, 255, 0.85);
-  color: #fff;
-  box-shadow: 0 0 0 3px rgba(125, 107, 255, 0.25);
-}
-
-.list-actions {
-  justify-content: flex-start;
 }
 
 .overview-card {
@@ -188,6 +135,16 @@
   gap: 12px;
 }
 
+.list-only {
+  margin-top: 0;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .tx-list-item {
   padding: 12px 14px;
   border-radius: 12px;
@@ -248,6 +205,15 @@
   background: rgba(255, 193, 7, 0.15);
   border-color: rgba(255, 193, 7, 0.5);
   color: #ffd166;
+}
+
+.empty-hint {
+  padding: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin-top: 8px;
 }
 
 .modal-backdrop {

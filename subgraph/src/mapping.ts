@@ -9,6 +9,6 @@ export function handleMessageStored(event: MessageStored): void {
   entity.sender = event.params.sender;
   entity.message = event.params.message;
   entity.timestamp = event.params.timestamp;
-
+  entity.blockNumber = event.block.number;
   entity.save();
 }

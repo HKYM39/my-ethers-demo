@@ -1,86 +1,82 @@
 import { useState } from "react";
 import "./TransferPanel.css";
+import { useWriteContract } from "wagmi";
+import abiJson from "../abi/MessageStore.json";
+
+const ABI = abiJson.abi;
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 const TransferPanel = () => {
-  const [fromAddress, setFromAddress] = useState("");
-  const [toAddress, setToAddress] = useState("");
-  const [amount, setAmount] = useState("");
-  const [tokenSymbol, setTokenSymbol] = useState("ETH");
+  const [recordText, setRecordText] = useState("");
+  const [hexPreview, setHexPreview] = useState("");
+  const { writeContract, error, isPending, data: hash } = useWriteContract();
 
-  const handleSubmit = () => {
-    console.log("[Transfer] Submit clicked", {
-      from: fromAddress,
-      to: toAddress,
-      amount,
-      tokenSymbol,
-    });
+  const toHex = (value: string) =>
+    Array.from(value)
+      .map((ch) => ch.charCodeAt(0).toString(16).padStart(2, "0"))
+      .join("");
+
+  const handleRecord = () => {
+    const trimmed = recordText.trim();
+    if (!trimmed) {
+      console.warn("[Record] Empty input");
+      return;
+    }
+    const hex = toHex(trimmed);
+    writeContract(
+      {
+        address: CONTRACT_ADDRESS as `0x${string}`,
+        abi: ABI,
+        functionName: "storeMessage",
+        args: [hex],
+      },
+      {
+        onSuccess(txHash) {
+          // 这里的 txHash 就是交易哈希
+          setHexPreview(txHash);
+        },
+      }
+    );
+    // setHexPreview(`0x${hex}`);
+    console.log("[Record] Hex payload", `0x${hex}`);
+    console.log(hash);
   };
 
   const handleReset = () => {
-    setFromAddress("");
-    setToAddress("");
-    setAmount("");
-    setTokenSymbol("ETH");
-    console.log("[Transfer] Reset form");
+    setRecordText("");
+    setHexPreview("");
+    console.log("[Record] Reset input");
   };
 
   return (
     <section className="panel transfer-panel">
       <div className="panel-header">
         <div>
-          <h2>转账操作</h2>
-          <p>仅提供 UI 骨架，实际签名与广播逻辑请自行补充。</p>
+          <h2>记录模块</h2>
+          <p>输入任意内容，点击按钮将其转换为十六进制并输出到控制台。</p>
         </div>
         <div className="transfer-actions">
           <button type="button" className="ghost" onClick={handleReset}>
-            清空输入
+            清空
           </button>
-          <button type="button" onClick={handleSubmit}>
-            发起转账
+          <button type="button" onClick={handleRecord}>
+            记录并输出
           </button>
         </div>
       </div>
 
-      <div className="grid">
-        <label className="field">
-          <span>From 地址</span>
-          <input
-            autoComplete="off"
-            placeholder="0x 发起地址"
-            value={fromAddress}
-            onChange={(event) => setFromAddress(event.target.value)}
-          />
-        </label>
-        <label className="field">
-          <span>To 地址</span>
-          <input
-            autoComplete="off"
-            placeholder="0x 收款地址"
-            value={toAddress}
-            onChange={(event) => setToAddress(event.target.value)}
-          />
-        </label>
-      </div>
+      <label className="field">
+        <span>记录内容</span>
+        <input
+          autoComplete="off"
+          placeholder="输入需要记录的文本..."
+          value={recordText}
+          onChange={(event) => setRecordText(event.target.value)}
+        />
+      </label>
 
-      <div className="grid">
-        <label className="field">
-          <span>数量</span>
-          <input
-            autoComplete="off"
-            placeholder="0.00"
-            value={amount}
-            onChange={(event) => setAmount(event.target.value)}
-          />
-        </label>
-        <label className="field">
-          <span>代币符号</span>
-          <input
-            autoComplete="off"
-            placeholder="ETH / USDC..."
-            value={tokenSymbol}
-            onChange={(event) => setTokenSymbol(event.target.value)}
-          />
-        </label>
+      <div className="transfer-hint">
+        <p>最新十六进制：{hexPreview || "--"}</p>
       </div>
     </section>
   );

@@ -1,26 +1,26 @@
-specVersion: 0.0.5
-description: Block Filtering Example
-repository: https://github.com/graphprotocol/graph-toolings
+specVersion: 1.3.0
+indexerHints:
+  prune: auto
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum/contract
+  - kind: ethereum
     name: MessageStore
-    network: localhost
+    network: sepolia
     source:
-      startBlock: 0
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      address: "0x9E1A6deFD380A22D8b2E4C2511d640f5B661b337"
       abi: MessageStore
+      startBlock: 9706775
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.7
+      apiVersion: 0.0.9
       language: wasm/assemblyscript
       entities:
-        - MessageStoredEvent
+        - MessageStored
       abis:
         - name: MessageStore
           file: ./abis/MessageStore.json
       eventHandlers:
         - event: MessageStored(indexed address,string,uint256)
           handler: handleMessageStored
-      file: ./src/mapping.ts
+      file: ./src/message-store.ts

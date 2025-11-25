@@ -1,5 +1,5 @@
 
-çßdataSources:
+éádataSources:
   - kind: ethereum/contract
     mapping:
       abis:
@@ -13,11 +13,11 @@
         - event: MessageStored(indexed address,string,uint256)
           handler: handleMessageStored
       file:
-        /: /ipfs/QmWw5CU8MQfteSTLxa9XHhJbMHBxNtCvWBco2k59pYjctp
+        /: /ipfs/QmbRUhJhK8YxbF9k71zm4dugD3PtdPgaPbfLVzxfm2yRYf
       kind: ethereum/events
       language: wasm/assemblyscript
     name: MessageStore
-    network: mainnet
+    network: localhost
     source:
       abi: MessageStore
       address: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
@@ -28,4 +28,4 @@ schema:
   file:
     /: /ipfs/Qmcke5XgCfpn9KJNGFMcxFJ91qcYJNcHwHeCG88L96brXj
 specVersion: 0.0.5
-ß
+á
