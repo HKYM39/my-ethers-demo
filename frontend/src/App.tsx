@@ -8,9 +8,15 @@ function App() {
   return (
     <div className="app">
       <Hero />
-      <WalletAccountPanel />
-      <TransferPanel />
-      <TransactionPanel />
+      <main className="dashboard-grid">
+        <div className="sidebar-stack">
+          <WalletAccountPanel />
+          <TransferPanel />
+        </div>
+        <div className="main-column">
+          <TransactionPanel />
+        </div>
+      </main>
     </div>
   );
 }

@@ -33,6 +33,43 @@
   gap: 18px;
 }
 
+.transaction-scope {
+  margin: 18px 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scope-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 14px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.pill.active {
+  background: rgba(125, 107, 255, 0.2);
+  border-color: rgba(125, 107, 255, 0.85);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(125, 107, 255, 0.25);
+}
+
+.list-actions {
+  justify-content: flex-start;
+}
+
 .overview-card {
   padding: 16px;
   border-radius: 16px;
@@ -143,4 +180,111 @@
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 14px;
   color: #f6f7f9;
+}
+
+.tx-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tx-list-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  cursor: pointer;
+  transition: border 120ms ease, transform 120ms ease;
+}
+
+.tx-list-item:hover {
+  border-color: rgba(125, 107, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.tx-list-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tx-list-item p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+.tx-list-item small {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffd166;
+  font-size: 12px;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.badge.success {
+  background: rgba(67, 217, 173, 0.15);
+  border-color: rgba(67, 217, 173, 0.5);
+  color: #73f3d7;
+}
+
+.badge.failed {
+  background: rgba(255, 60, 65, 0.15);
+  border-color: rgba(255, 60, 65, 0.5);
+  color: #ff7574;
+}
+
+.badge.pending {
+  background: rgba(255, 193, 7, 0.15);
+  border-color: rgba(255, 193, 7, 0.5);
+  color: #ffd166;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  padding: 16px;
+}
+
+.modal {
+  width: min(860px, 95vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(15, 18, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.modal-header p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  word-break: break-all;
 }

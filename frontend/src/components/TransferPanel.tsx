@@ -82,10 +82,6 @@ const TransferPanel = () => {
           />
         </label>
       </div>
-
-      <div className="transfer-hint">
-        <p>实际 gas 估算、余额校验、代币精度等逻辑请在事件处理函数内补全。</p>
-      </div>
     </section>
   );
 };

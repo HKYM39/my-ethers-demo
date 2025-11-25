@@ -23,9 +23,10 @@ body {
 }
 
 #root {
-  max-width: 960px;
   margin: 0 auto;
-  padding: 64px 20px 96px;
+  padding: 36px 28px 96px;
+  max-height: 100vh;
+  width: 100%;
 }
 
 .app {
@@ -34,8 +35,34 @@ body {
   gap: 24px;
 }
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 1080px) {
+  .dashboard-grid {
+    grid-template-columns: 320px 1fr;
+    align-items: start;
+    gap: 28px;
+  }
+}
+
 .panel {
-  padding: 28px;
+  padding: 14px;
   border-radius: 20px;
   background: rgba(13, 17, 26, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.06);
