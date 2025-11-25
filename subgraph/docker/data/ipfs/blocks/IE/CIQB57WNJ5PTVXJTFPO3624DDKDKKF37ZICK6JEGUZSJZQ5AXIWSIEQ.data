@@ -1,0 +1,31 @@
+
+çßdataSources:
+  - kind: ethereum/contract
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmZMzjYVu3iLJDgxZG6dvozXiFrzCHtqS14NRT8nsJE35d
+          name: MessageStore
+      apiVersion: 0.0.7
+      entities:
+        - MessageStoredEvent
+      eventHandlers:
+        - event: MessageStored(indexed address,string,uint256)
+          handler: handleMessageStored
+      file:
+        /: /ipfs/QmWw5CU8MQfteSTLxa9XHhJbMHBxNtCvWBco2k59pYjctp
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: MessageStore
+    network: mainnet
+    source:
+      abi: MessageStore
+      address: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+      startBlock: 0
+description: Block Filtering Example
+repository: https://github.com/graphprotocol/graph-toolings
+schema:
+  file:
+    /: /ipfs/Qmcke5XgCfpn9KJNGFMcxFJ91qcYJNcHwHeCG88L96brXj
+specVersion: 0.0.5
+ß
