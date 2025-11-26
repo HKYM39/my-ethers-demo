@@ -3,18 +3,16 @@ import "./TransferPanel.css";
 import { useWriteContract } from "wagmi";
 import abiJson from "../abi/MessageStore.json";
 
-const ABI = abiJson.abi;
-const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const ABI =
+  abiJson.abis[
+    "0xdecb31c1d281dd756cf11544e50b58dfb3b53bf313b81ce67cd487473b9a067b"
+  ];
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
 const TransferPanel = () => {
   const [recordText, setRecordText] = useState("");
   const [hexPreview, setHexPreview] = useState("");
   const { writeContract, error, isPending, data: hash } = useWriteContract();
-
-  const toHex = (value: string) =>
-    Array.from(value)
-      .map((ch) => ch.charCodeAt(0).toString(16).padStart(2, "0"))
-      .join("");
 
   const handleRecord = () => {
     const trimmed = recordText.trim();
@@ -22,13 +20,12 @@ const TransferPanel = () => {
       console.warn("[Record] Empty input");
       return;
     }
-    const hex = toHex(trimmed);
     writeContract(
       {
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: ABI,
         functionName: "storeMessage",
-        args: [hex],
+        args: [trimmed],
       },
       {
         onSuccess(txHash) {
@@ -38,7 +35,7 @@ const TransferPanel = () => {
       }
     );
     // setHexPreview(`0x${hex}`);
-    console.log("[Record] Hex payload", `0x${hex}`);
+    console.log("[Record] Hex payload", `0x${hexPreview}`);
     console.log(hash);
   };
 

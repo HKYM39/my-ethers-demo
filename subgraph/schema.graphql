@@ -1,8 +1,9 @@
-type MessageStoredEvent @entity(immutable: true) {
-  id: ID!
-  sender: Bytes!
-  message: String!
-  timestamp: BigInt!
+type MessageStored @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  message: String! # string
+  timestamp: BigInt! # uint256
   blockNumber: BigInt!
-  txHash: Bytes!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
 }

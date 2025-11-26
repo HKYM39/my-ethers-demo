@@ -1,7 +1,8 @@
 {
-  "cosmoshub-4": {
-    "CosmosHub": {
-      "startBlock": 0
+  "sepolia": {
+    "MessageStore": {
+      "address": "0x9E1A6deFD380A22D8b2E4C2511d640f5B661b337",
+      "startBlock": 9706775
     }
   }
 }

@@ -1,25 +1,18 @@
 {
-  "name": "message-store-subgraph",
-  "version": "0.1.0",
-  "private": true,
+  "name": "test-subgraph",
+  "license": "UNLICENSED",
   "scripts": {
-    "build": "graph build",
     "codegen": "graph codegen",
-    "create": "graph create cosmos-block-filtering --node https://api.studio.thegraph.com/deploy/",
-    "create-local": "graph create cosmos-block-filtering --node http://127.0.0.1:8020",
-    "deploy": "graph deploy cosmos-block-filtering --ipfs https://api.thegraph.com/ipfs/ --node https://api.studio.thegraph.com/deploy/",
-    "deploy-local": "graph deploy cosmos-block-filtering -l v0.1.0 --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020",
-    "prepare:cosmoshub": "mustache config/cosmoshub.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:osmosis": "mustache config/osmosis.json subgraph.template.yaml > subgraph.yaml",
-    "remove-local": "graph remove cosmos-block-filtering --node http://127.0.0.1:8020"
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ test-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ test-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ test-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 test-subgraph",
+    "test": "graph test"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0"
+    "@graphprotocol/graph-cli": "0.98.1",
+    "@graphprotocol/graph-ts": "0.37.0"
   },
-  "devDependencies": {
-    "@graphprotocol/graph-cli": "0.90.1",
-    "@graphprotocol/graph-ts": "0.35.1",
-    "mustache": "^4.2.0"
-  }
+  "devDependencies": { "matchstick-as": "0.6.0" }
 }

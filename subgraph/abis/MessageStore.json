@@ -1,52 +1,36 @@
-{
-  "_format": "hh3-artifact-1",
-  "contractName": "MessageStore",
-  "sourceName": "contracts/MessageBoard.sol",
-  "abi": [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "sender",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "message",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
-        }
-      ],
-      "name": "MessageStored",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "message",
-          "type": "string"
-        }
-      ],
-      "name": "storeMessage",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ],
-  "bytecode": "0x6080604052348015600e575f5ffd5b506101668061001c5f395ff3fe608060405234801561000f575f5ffd5b5060043610610029575f3560e01c8063d4e36ba71461002d575b5f5ffd5b61004061003b36600461008b565b610042565b005b336001600160a01b03167fbff9c49b99e31a4e0bf388052eec92748cc1546aa61408a68e5a3f870809965383834260405161007f939291906100f9565b60405180910390a25050565b5f5f6020838503121561009c575f5ffd5b823567ffffffffffffffff8111156100b2575f5ffd5b8301601f810185136100c2575f5ffd5b803567ffffffffffffffff8111156100d8575f5ffd5b8560208284010111156100e9575f5ffd5b6020919091019590945092505050565b60408152826040820152828460608301375f606084830101525f6060601f19601f860116830101905082602083015294935050505056fea26469706673582212206264355982ea706f084b04c837b46cf4eb1f206cdd96ede1884ab0aaba55942664736f6c634300081c0033",
-  "deployedBytecode": "0x608060405234801561000f575f5ffd5b5060043610610029575f3560e01c8063d4e36ba71461002d575b5f5ffd5b61004061003b36600461008b565b610042565b005b336001600160a01b03167fbff9c49b99e31a4e0bf388052eec92748cc1546aa61408a68e5a3f870809965383834260405161007f939291906100f9565b60405180910390a25050565b5f5f6020838503121561009c575f5ffd5b823567ffffffffffffffff8111156100b2575f5ffd5b8301601f810185136100c2575f5ffd5b803567ffffffffffffffff8111156100d8575f5ffd5b8560208284010111156100e9575f5ffd5b6020919091019590945092505050565b60408152826040820152828460608301375f606084830101525f6060601f19601f860116830101905082602083015294935050505056fea26469706673582212206264355982ea706f084b04c837b46cf4eb1f206cdd96ede1884ab0aaba55942664736f6c634300081c0033",
-  "linkReferences": {},
-  "deployedLinkReferences": {},
-  "immutableReferences": {},
-  "inputSourceName": "project/contracts/MessageBoard.sol",
-  "buildInfoId": "solc-0_8_28-92c5f7255277556bd2c7aa71840008781746b963"
-}
+[
+  {
+    "name": "MessageStored",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "sender",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "storeMessage",
+    "type": "function",
+    "inputs": [
+      { "name": "message", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  }
+]

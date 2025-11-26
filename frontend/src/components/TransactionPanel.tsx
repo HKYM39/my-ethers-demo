@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import "./TransactionPanel.css";
 import { useQuery } from "@tanstack/react-query";
-import { fetchTransactionList } from "../apis/fetchTransaction";
+import { gql, request } from "graphql-request";
 import type { TransactionEntity } from "../apis/fetchTransaction";
 
 type TransactionPreview = {
@@ -13,7 +13,7 @@ type TransactionPreview = {
   timestamp: string;
   from: string;
   to: string | null;
-  value: bigint;
+  value: string;
   transactionFee?: string;
   gasPrice: bigint;
   gasUsed: bigint;
@@ -35,7 +35,7 @@ const emptyTransactionPreview: TransactionPreview = {
   timestamp: "--",
   from: "--",
   to: "--",
-  value: 0n,
+  value: "--",
   transactionFee: "--",
   gasPrice: 0n,
   gasUsed: 0n,
@@ -48,57 +48,57 @@ const emptyTransactionPreview: TransactionPreview = {
   inputData: "0x",
 };
 
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
 const normalizeTx = (tx: TransactionEntity): TransactionPreview => ({
   ...emptyTransactionPreview,
-  hash: tx.hash,
-  from: tx.from,
-  to: tx.to,
+  hash: tx.id,
+  from: tx.sender,
+  to: CONTRACT_ADDRESS,
   timestamp: tx.timestamp,
-  value: BigInt(tx.value || 0),
+  value: tx.message,
   status: "success",
   statusLabel: "完成",
 });
+
+const TRANSACTION_QUERY = gql`
+  {
+    messageStoreds(first: 5) {
+      id
+      sender
+      message
+      timestamp
+    }
+  }
+`;
+
+const SUB_GRAPH_API = import.meta.env.VITE_GRAPH_URL;
+const apiKey = import.meta.env.VITE_GRAPH_API_KEY;
+
+const headers = { Authorization: `Bearer ${apiKey}` };
 
 const TransactionPanel = () => {
   const [transactionView, setTransactionView] = useState<TransactionPreview>(
     emptyTransactionPreview
   );
-  const [convertText, setConvertText] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, error, refetch, isFetching } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactionList,
-    refetchInterval: false,
+    queryKey: ["data"],
+    async queryFn() {
+      return await request(SUB_GRAPH_API, TRANSACTION_QUERY, {}, headers);
+    },
   });
 
+  console.log(data);
+
   const transactionList = useMemo(
-    () => (data ?? []).map((item) => normalizeTx(item)),
+    () => (data?.messageStoreds ?? []).map((item) => normalizeTx(item)),
     [data]
   );
 
   const handleSelectTransaction = (tx: TransactionPreview) => {
     setTransactionView(tx);
-    setConvertText(parseHexToString(tx.inputData) ?? "");
-    setIsModalOpen(true);
   };
-
-  const parseHexToString = (source: string) => {
-    if (!source.startsWith("0x")) return "";
-    const hex = source.slice(2);
-    if (hex.length % 2 !== 0) {
-      console.error("传入的十六进制字符串不合法！！");
-      return "";
-    }
-    let result = "";
-    for (let index = 0; index < hex.length; index += 2) {
-      result += String.fromCharCode(
-        parseInt(hex.substring(index, index + 2), 16)
-      );
-    }
-    return result;
-  };
-
   return (
     <section className="panel transaction-panel">
       <div className="panel-header">
@@ -136,7 +136,7 @@ const TransactionPanel = () => {
                 <p>
                   From {item.from} → To {item.to}
                 </p>
-                <small>{item.timestamp}</small>
+                <small>Value: {item.value}</small>
               </div>
               <span className={`badge ${item.status}`}>{item.statusLabel}</span>
             </div>
@@ -146,99 +146,6 @@ const TransactionPanel = () => {
           )}
         </div>
       </div>
-
-      {isModalOpen && (
-        <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-          <div
-            className="modal"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="modal-header">
-              <div>
-                <h3>交易详情</h3>
-                <p>{transactionView.hash}</p>
-              </div>
-              <button className="ghost" onClick={() => setIsModalOpen(false)}>
-                关闭
-              </button>
-            </div>
-            <div className="transaction-overview">
-              <div className="overview-card">
-                <span>区块</span>
-                <strong>{transactionView.blockNumber}</strong>
-                <small>{transactionView.confirmations} 次确认</small>
-              </div>
-              <div className="overview-card">
-                <span>区块时间</span>
-                <strong>{transactionView.timestamp}</strong>
-              </div>
-            </div>
-
-            <div className="transaction-details">
-              <div className="transaction-row">
-                <span>From</span>
-                <code>{transactionView.from}</code>
-              </div>
-              <div className="transaction-row">
-                <span>To</span>
-                <code>{transactionView.to}</code>
-              </div>
-              <div className="transaction-row">
-                <span>Value</span>
-                <strong>{transactionView.value}</strong>
-              </div>
-              <div className="transaction-row">
-                <span>Gas Price (Gwei)</span>
-                <code>{transactionView.gasPrice}</code>
-              </div>
-              <div className="transaction-row">
-                <span>Gas Used / Limit</span>
-                <code>
-                  {transactionView.gasUsed} / {transactionView.gasLimit}
-                </code>
-              </div>
-            </div>
-
-            <div className="transaction-section">
-              <h3>其他 Meta 信息</h3>
-              <div className="meta-grid">
-                <div>
-                  <span>Nonce</span>
-                  <strong>{transactionView.nonce}</strong>
-                </div>
-                <div>
-                  <span>Txn Type</span>
-                  <strong>{transactionView.transactionType}</strong>
-                </div>
-                <div>
-                  <span>区块中的位置</span>
-                  <strong>{transactionView.positionInBlock}</strong>
-                </div>
-                <div>
-                  <span>Max Fee Per Gas</span>
-                  <code>{transactionView.maxFeePerGas}</code>
-                </div>
-                <div>
-                  <span>Max Priority Fee</span>
-                  <code>{transactionView.maxPriorityFeePerGas}</code>
-                </div>
-              </div>
-            </div>
-
-            <div className="transaction-section">
-              <h3>Input Data</h3>
-              <pre className="input-preview">{transactionView.inputData}</pre>
-            </div>
-            <div className="transaction-section">
-              <h3>解码后的InputData</h3>
-              <pre className="input-preview">{convertText}</pre>
-              {convertText.startsWith("http") && <img src={convertText} />}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
